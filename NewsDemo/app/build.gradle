@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'realm-android'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "me.lazmaid.newsdemo"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:$android_support_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "com.github.kittinunf.fuel:fuel-android:$fuel_version"
+    compile "com.github.kittinunf.fuel:fuel-rxjava:$fuel_version"
+    compile "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    compile "com.google.code.gson:gson:$gson_version"
+    compile "com.github.kittinunf.reactiveandroid:reactiveandroid-ui:$reactive_android_version"
+    compile "com.github.kittinunf.reactiveandroid:reactiveandroid-appcompat-v7:$reactive_android_version"
+    compile "com.github.kittinunf.reactiveandroid:reactiveandroid-design:$reactive_android_version"
+    compile "com.github.vicpinm:krealmextensions:$kotlin_realm_version"
+
+    testCompile "junit:junit:$junit_version"
+    testCompile("com.nhaarman:mockito-kotlin:$mockito_kotlin_version")
+
+    compile 'com.android.support:recyclerview-v7:25.1.1'
+    compile 'com.android.support:cardview-v7:25.1.1'
+}
+repositories {
+    mavenCentral()
+}
