@@ -64,6 +64,9 @@ class MainActivity : AppCompatActivity() {
                         .load(item.thumbnailUrl)
                         .fitCenter()
                         .into(ivNewsImage)
+                tvFullArticle.setOnClickListener {
+                    //TODO: Open Browser
+                }
             }
         }
     }

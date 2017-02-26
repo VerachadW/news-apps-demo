@@ -1,4 +1,4 @@
-package me.lazmaid.news.demo.data
+package me.lazmaid.newsdemo.data
 
 import me.lazmaid.news.demo.data.source.FakeNewsDataSource
 

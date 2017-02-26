@@ -1,6 +1,6 @@
 package me.lazmaid.newsdemo.presentation
 
-import me.lazmaid.news.demo.data.Injector
+import me.lazmaid.newsdemo.Injector
 import me.lazmaid.newsdemo.data.model.News
 import me.lazmaid.newsdemo.data.source.NewsDataSource
 import rx.Observable

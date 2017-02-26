@@ -1,4 +1,4 @@
-package me.lazmaid.news.demo
+package me.lazmaid.newsdemo
 
 import me.lazmaid.newsdemo.data.source.NewsRepository
 
