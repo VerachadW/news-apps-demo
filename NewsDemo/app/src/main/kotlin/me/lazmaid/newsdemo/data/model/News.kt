@@ -1,5 +1,6 @@
 package me.lazmaid.newsdemo.data.model
 
+import com.google.gson.annotations.SerializedName
 import io.realm.RealmModel
 import io.realm.annotations.RealmClass
 import java.util.*
@@ -12,8 +13,11 @@ import java.util.*
 open class News (
     open var title: String = "",
     open var description: String = "",
+    @SerializedName("urlToImage")
     open var thumbnailUrl: String = "",
+    @SerializedName("url")
     open var articleLinks: String = "",
+    @SerializedName("publishedAt")
     open var publishedDateTime: Date = Date()
 
 ): RealmModel

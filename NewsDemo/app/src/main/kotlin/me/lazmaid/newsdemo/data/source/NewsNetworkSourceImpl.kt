@@ -40,7 +40,7 @@ class NewsNetworkSourceImpl : NewsNetworkSource {
                 if (status == "ok" && jsonReader.nextName() == "articles") {
                     data = gson.fromReader<List<News>>(jsonReader)
                 } else if (status == "error" && jsonReader.nextName() == "message") {
-
+                    throw IllegalStateException(jsonReader.nextString())
                 } else {
                     jsonReader.skipValue()
                 }

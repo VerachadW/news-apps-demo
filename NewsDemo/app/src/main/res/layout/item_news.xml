@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/ic_launcher"
-                android:minHeight="100dp"
+                android:minHeight="150dp"
                 android:id="@+id/ivNewsImage" />
 
             <TextView

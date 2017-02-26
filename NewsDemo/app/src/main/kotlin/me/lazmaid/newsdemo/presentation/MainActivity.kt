@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.github.kittinunf.reactiveandroid.rx.plusAssign
 import com.github.kittinunf.reactiveandroid.scheduler.AndroidThreadScheduler
@@ -27,8 +28,12 @@ class MainActivity : AppCompatActivity() {
             .doOnSubscribe {
                 swlNews.isRefreshing = true
             }
-            .doOnNext {
+            .doOnCompleted {
                 swlNews.isRefreshing = false
+            }
+            .doOnError {
+                swlNews.isRefreshing = false
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             }
 
     override fun onCreate(savedInstanceState: Bundle?) {
