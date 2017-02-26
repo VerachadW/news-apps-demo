@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NewsDemo</string>
+    <string name="view_full_article">View Full Article</string>
 </resources>

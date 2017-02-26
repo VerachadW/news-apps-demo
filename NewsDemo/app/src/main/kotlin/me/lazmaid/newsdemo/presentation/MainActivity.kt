@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
                 tvDescription.text = item.description
                 Glide.with(itemView.context)
                         .load(item.thumbnailUrl)
-                        .placeholder(R.drawable.placeholder)
                         .fitCenter()
                         .into(ivNewsImage)
             }
