@@ -2,7 +2,10 @@ package me.lazmaid.newsdemo.test
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.inOrder
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import me.lazmaid.newsdemo.data.model.News
 import me.lazmaid.newsdemo.data.source.NewsLocalSource
 import me.lazmaid.newsdemo.data.source.NewsNetworkSource

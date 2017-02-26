@@ -14,7 +14,7 @@ class NewsLocalSourceImpl : NewsLocalSource {
         val newsList = arrayListOf<News>()
         Realm.getDefaultInstance().use {
             val items = it.where(News::class.java).findAll()
-            newsList += it.copyFromRealm(items)
+            newsList.addAll(it.copyFromRealm(items))
         }
         return Observable.just(newsList)
     }
