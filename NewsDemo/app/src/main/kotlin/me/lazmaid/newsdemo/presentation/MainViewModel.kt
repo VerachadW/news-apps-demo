@@ -21,9 +21,7 @@ class MainViewModelImpl(
 
     override fun loadNews(): Observable<List<News>> = newsDataSource.getNews()
             .map {
-                it.sortedBy(News::publishedDateTime)
+                it.sortedByDescending(News::publishedDateTime)
             }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
 
 }

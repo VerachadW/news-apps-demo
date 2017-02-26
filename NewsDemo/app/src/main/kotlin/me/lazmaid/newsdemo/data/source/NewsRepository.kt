@@ -7,8 +7,8 @@ import rx.Observable
  * Created by VerachadW on 2/26/2017 AD.
  */
 
-class NewsRepository(val localSource: NewsLocalSource = NewsLocalSourceImpl(),
-                     val networkSource: NewsNetworkSource = NewsNetworkSourceImpl()) : NewsDataSource {
+class NewsRepository(private val localSource: NewsLocalSource = NewsLocalSourceImpl(),
+                     private val networkSource: NewsNetworkSource = NewsNetworkSourceImpl()) : NewsDataSource {
 
     override fun getNews(): Observable<List<News>> =
         localSource.getNews().concatWith(networkSource.getNews().doOnNext {
