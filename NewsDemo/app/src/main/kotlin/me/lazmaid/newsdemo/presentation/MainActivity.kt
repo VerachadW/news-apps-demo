@@ -1,5 +1,7 @@
 package me.lazmaid.newsdemo.presentation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -70,7 +72,11 @@ class MainActivity : AppCompatActivity() {
                         .fitCenter()
                         .into(ivNewsImage)
                 tvFullArticle.setOnClickListener {
-                    //TODO: Open Browser
+                    val webIntent = Intent().apply {
+                        action = Intent.ACTION_VIEW
+                        data = Uri.parse(item.articleLink)
+                    }
+                    itemView.context.startActivity(webIntent)
                 }
             }
         }

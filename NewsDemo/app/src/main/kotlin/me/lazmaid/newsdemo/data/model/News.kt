@@ -11,13 +11,13 @@ import java.util.*
 
 @RealmClass
 open class News (
-    open var title: String = "",
-    open var description: String = "",
-    @SerializedName("urlToImage")
+        open var title: String = "",
+        open var description: String = "",
+        @SerializedName("urlToImage")
     open var thumbnailUrl: String = "",
-    @SerializedName("url")
-    open var articleLinks: String = "",
-    @SerializedName("publishedAt")
+        @SerializedName("url")
+    open var articleLink: String = "",
+        @SerializedName("publishedAt")
     open var publishedDateTime: Date = Date()
 
 ): RealmModel
