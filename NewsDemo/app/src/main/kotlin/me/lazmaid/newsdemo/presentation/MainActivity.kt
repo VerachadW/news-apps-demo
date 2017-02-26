@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.bumptech.glide.Glide
 import com.github.kittinunf.reactiveandroid.support.v7.widget.rx_itemsWith
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_news.view.*
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
                 holder.itemView.apply {
                     tvTitle.text = item.title
                     tvDescription.text = item.description
+                    Glide.with(this@MainActivity)
+                            .load(item.thumbnailUrl)
+                            .placeholder(R.drawable.placeholder)
+                            .fitCenter().into(ivNewsImage)
                 }
             })
         }
