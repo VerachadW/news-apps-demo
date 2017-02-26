@@ -70,7 +70,19 @@ dependencies {
     compile "com.github.vicpinm:krealmextensions:$kotlin_realm_version"
 
     testCompile "junit:junit:$junit_version"
-    testCompile("com.nhaarman:mockito-kotlin:$mockito_kotlin_version")
+    testCompile "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
+    testCompile("com.natpryce:hamkrest:$hamkrest_version") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
+    testCompile("org.jetbrains.spek:spek-api:$spek_version") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
+    testCompile("org.jetbrains.spek:spek-junit-platform-engine:$spek_version") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
+    testCompile("org.junit.platform:junit-platform-runner:$junit_platform_runner_version") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
 
 }
 repositories {
