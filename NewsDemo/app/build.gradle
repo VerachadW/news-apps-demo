@@ -16,19 +16,18 @@ android {
     }
 
     sourceSets {
-        main {
-            java.srcDirs = ['src/main/kotlin']
-        }
-        mock {
-            java.srcDirs = ['src/mock/kotlin']
-        }
+        androidTests.java.srcDirs += ["src/androidTest/kotlin"]
+        test.java.srcDirs += ["src/test/kotlin"]
+        prod.java.srcDirs += ["src/prod/kotlin"]
+        mock.java.srcDirs += ["src/mock/kotlin"]
+        main.java.srcDirs += ["src/main/kotlin"]
     }
 
     productFlavors {
         mock {
-            applicationIdSuffix = ".mock"
+            applicationId = "me.lazmiad.newsdemo.mock"
         }
-        production
+        prod
     }
 
     buildTypes {
@@ -36,6 +35,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*.txt'
+        exclude 'META-INF/*.properties'
     }
 
     android.variantFilter { variant ->
