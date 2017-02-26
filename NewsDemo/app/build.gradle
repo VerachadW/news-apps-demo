@@ -67,6 +67,7 @@ dependencies {
     compile "com.github.kittinunf.reactiveandroid:reactiveandroid-ui:$reactive_android_version"
     compile "com.github.kittinunf.reactiveandroid:reactiveandroid-appcompat-v7:$reactive_android_version"
     compile "com.github.kittinunf.reactiveandroid:reactiveandroid-design:$reactive_android_version"
+    compile "com.github.kittinunf.reactiveandroid:reactiveandroid-support-v4:$reactive_android_version"
     compile "com.github.vicpinm:krealmextensions:$kotlin_realm_version"
     compile "com.github.bumptech.glide:glide:$glide_version"
 

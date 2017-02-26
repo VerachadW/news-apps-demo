@@ -1,43 +1,73 @@
 package me.lazmaid.newsdemo.presentation
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.bumptech.glide.Glide
+import com.github.kittinunf.reactiveandroid.rx.plusAssign
+import com.github.kittinunf.reactiveandroid.scheduler.AndroidThreadScheduler
+import com.github.kittinunf.reactiveandroid.support.v4.widget.rx_refresh
 import com.github.kittinunf.reactiveandroid.support.v7.widget.rx_itemsWith
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_news.view.*
 import me.lazmaid.newsdemo.R
+import me.lazmaid.newsdemo.data.model.News
+import rx.schedulers.Schedulers
+import rx.subscriptions.CompositeSubscription
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel = MainViewModelImpl()
+    private val subscriptions = CompositeSubscription()
+
+    private val newsObservable = viewModel.loadNews().subscribeOn(Schedulers.io())
+            .observeOn(AndroidThreadScheduler.main)
+            .doOnSubscribe {
+                swlNews.isRefreshing = true
+            }
+            .doOnNext {
+                swlNews.isRefreshing = false
+            }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val swipeRefreshObservable = swlNews.rx_refresh().flatMap { newsObservable }
+
         rvNews.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            rx_itemsWith(viewModel.loadNews(), onCreateViewHolder = { parent, type ->
-                val view = layoutInflater.inflate(R.layout.item_news, parent, false)
-                NewsViewHolder(view)
-            }, onBindViewHolder = { holder, type, item ->
-                holder.itemView.apply {
-                    tvTitle.text = item.title
-                    tvDescription.text = item.description
-                    Glide.with(this@MainActivity)
-                            .load(item.thumbnailUrl)
-                            .placeholder(R.drawable.placeholder)
-                            .fitCenter().into(ivNewsImage)
-                }
+
+            subscriptions += rx_itemsWith(swipeRefreshObservable.mergeWith(newsObservable),
+                    onCreateViewHolder = { parent, type ->
+                        val view = layoutInflater.inflate(R.layout.item_news, parent, false)
+                        NewsViewHolder(view)
+                    }, onBindViewHolder = { holder, type, item ->
+                holder.bindView(item)
             })
         }
     }
 
-    class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    override fun onDestroy() {
+        subscriptions.clear()
+        super.onDestroy()
+    }
+
+    class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bindView(item: News) {
+            itemView.apply {
+                tvTitle.text = item.title
+                tvDescription.text = item.description
+                Glide.with(itemView.context)
+                        .load(item.thumbnailUrl)
+                        .placeholder(R.drawable.placeholder)
+                        .fitCenter()
+                        .into(ivNewsImage)
+            }
+        }
+    }
 
 }
 

@@ -19,9 +19,10 @@ interface MainViewModel {
 class MainViewModelImpl(
         private val newsDataSource: NewsDataSource = Injector.provideNewsDataSource()) : MainViewModel {
 
-    override fun loadNews(): Observable<List<News>> = newsDataSource.getNews()
-            .map {
-                it.sortedByDescending(News::publishedDateTime)
-            }
+    override fun loadNews(): Observable<List<News>> =
+                newsDataSource.getNews()
+                        .map {
+                            it.sortedByDescending(News::publishedDateTime)
+                        }
 
 }
