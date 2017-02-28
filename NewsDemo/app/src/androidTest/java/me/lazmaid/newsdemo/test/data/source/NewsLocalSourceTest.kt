@@ -1,4 +1,4 @@
-package me.lazmaid.newsdemo.data.source
+package me.lazmaid.newsdemo.test.data.source
 
 import android.support.test.runner.AndroidJUnit4
 import com.natpryce.hamkrest.assertion.assertThat
@@ -7,16 +7,16 @@ import com.natpryce.hamkrest.hasSize
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import me.lazmaid.newsdemo.data.model.News
-import org.junit.Before
+import me.lazmaid.newsdemo.data.source.NewsLocalSource
+import me.lazmaid.newsdemo.data.source.NewsLocalSourceImpl
 import org.junit.Test
-import org.junit.runner.RunWith
 import rx.observers.TestSubscriber
 
 /**
  * Created by VerachadW on 2/26/2017 AD.
  */
 
-@RunWith(AndroidJUnit4::class)
+@org.junit.runner.RunWith(AndroidJUnit4::class)
 class NewsLocalSourceTest {
 
     val dataSource: NewsLocalSource = NewsLocalSourceImpl()
@@ -25,10 +25,10 @@ class NewsLocalSourceTest {
                 .deleteRealmIfMigrationNeeded()
                 .build()
 
-    @Before
+    @org.junit.Before
     fun setUp() {
-        Realm.setDefaultConfiguration(realmConfig)
-        Realm.getDefaultInstance().use {
+        io.realm.Realm.setDefaultConfiguration(realmConfig)
+        io.realm.Realm.getDefaultInstance().use {
             it.executeTransaction(Realm::deleteAll)
         }
     }

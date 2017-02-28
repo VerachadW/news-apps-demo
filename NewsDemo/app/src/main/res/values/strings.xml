@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NewsDemo</string>
     <string name="view_full_article">View Full Article</string>
+    <string name="no_internet_connection">Cannot load News from server. Please try again later.</string>
 </resources>

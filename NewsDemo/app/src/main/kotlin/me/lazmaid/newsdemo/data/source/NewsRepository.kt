@@ -1,5 +1,6 @@
 package me.lazmaid.newsdemo.data.source
 
+import com.github.kittinunf.fuel.core.FuelError
 import me.lazmaid.newsdemo.data.model.News
 import rx.Observable
 
@@ -11,8 +12,12 @@ class NewsRepository(private val localSource: NewsLocalSource = NewsLocalSourceI
                      private val networkSource: NewsNetworkSource = NewsNetworkSourceImpl()) : NewsDataSource {
 
     override fun getNews(): Observable<List<News>> =
-        localSource.getNews().concatWith(networkSource.getNews().doOnNext {
-            localSource.saveNews(it)
-        })
-
+            localSource.getNews().mergeWith(networkSource.getNews()
+                    .map {
+                        localSource.saveNews(it)
+                    }.flatMap {
+                        localSource.getNews()
+                    }.onErrorResumeNext {
+                        Observable.error((it as FuelError).exception)
+                    })
 }

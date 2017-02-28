@@ -1,5 +1,6 @@
 package me.lazmaid.newsdemo.presentation
 
+import com.github.kittinunf.result.Result
 import me.lazmaid.newsdemo.Injector
 import me.lazmaid.newsdemo.data.model.News
 import me.lazmaid.newsdemo.data.source.NewsDataSource
@@ -10,16 +11,18 @@ import rx.Observable
  */
 
 interface MainViewModel {
-    fun loadNews(): Observable<List<News>>
+    fun loadNews(): Observable<Result<List<News>, Exception>>
 }
 
 class MainViewModelImpl(
         private val newsDataSource: NewsDataSource = Injector.provideNewsDataSource()) : MainViewModel {
 
-    override fun loadNews(): Observable<List<News>> =
-                newsDataSource.getNews()
-                        .map {
-                            it.sortedByDescending(News::publishedDateTime)
-                        }
+    override fun loadNews(): Observable<Result<List<News>, Exception>> =
+            newsDataSource.getNews()
+            .map {
+                Result.of(it.sortedByDescending(News::publishedDateTime))
+            }.onErrorReturn {
+                Result.error(it as Exception)
+            }
 
 }
