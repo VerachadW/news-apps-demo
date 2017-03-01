@@ -11,7 +11,8 @@
         android:name=".NewsDemoApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.MainActivity">
+        <activity android:name=".presentation.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.MAIN" />

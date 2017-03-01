@@ -26,9 +26,6 @@ class MainActivity : AppCompatActivity() {
             .doOnCompleted {
                 swlNews.isRefreshing = false
             }
-            .doOnError {
-                swlNews.isRefreshing = false
-            }
 
     private val newsAdapter = NewsAdapter()
 
@@ -40,31 +37,20 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = newsAdapter
         }
+
         val swipeRefreshObservable = swlNews.rx_refresh().flatMap { newsObservable }
-        subscriptions += swipeRefreshObservable.mergeWith(newsObservable)
-        .subscribe({
-            it.fold({
-                newsAdapter.updateNewsList(it)
-            }, {
-                if (it is UnknownHostException) {
-                    Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                }
-            })
-        })
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable("list_layout_state", rvNews.layoutManager.onSaveInstanceState())
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState?.let {
-            rvNews.layoutManager.onRestoreInstanceState(it.getParcelable("list_layout_state"))
-        }
+        subscriptions += swipeRefreshObservable.mergeWith(newsObservable).subscribe({
+                    it.fold({
+                        newsAdapter.updateNewsList(it)
+                        rvNews.smoothScrollToPosition(0)
+                    }, {
+                        if (it is UnknownHostException) {
+                            Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                        }
+                    })
+                })
     }
 
     override fun onDestroy() {
