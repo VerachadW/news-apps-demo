@@ -1,5 +1,6 @@
 package me.lazmaid.newsdemo.data.source
 
+import android.util.Log
 import io.realm.Realm
 import me.lazmaid.newsdemo.data.model.News
 import rx.Observable
@@ -16,6 +17,7 @@ class NewsLocalSourceImpl : NewsLocalSource {
             val items = it.where(News::class.java).findAll()
             newsList.addAll(it.copyFromRealm(items))
         }
+        Log.d("Local", "getNews")
         return Observable.just(newsList)
     }
 

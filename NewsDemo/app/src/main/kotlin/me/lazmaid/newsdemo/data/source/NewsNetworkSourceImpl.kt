@@ -1,5 +1,6 @@
 package me.lazmaid.newsdemo.data.source
 
+import android.util.Log
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Deserializable
 import com.github.kittinunf.fuel.core.Response
@@ -23,6 +24,7 @@ class NewsNetworkSourceImpl : NewsNetworkSource {
         val params = mapOf("source" to "techcrunch",
                 "apiKey" to "55acf70fec4040febd3bb8262a212024",
                 "sortBy" to "latest")
+        Log.d("Network", "getNews")
         return Fuel.get("https://newsapi.org/v1/articles", parameters = params.toList())
                 .rx_object(NewsDeserializer())
     }

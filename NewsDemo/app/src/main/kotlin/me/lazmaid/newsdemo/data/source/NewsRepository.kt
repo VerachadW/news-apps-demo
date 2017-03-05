@@ -12,12 +12,13 @@ class NewsRepository(private val localSource: NewsLocalSource = NewsLocalSourceI
                      private val networkSource: NewsNetworkSource = NewsNetworkSourceImpl()) : NewsDataSource {
 
     override fun getNews(): Observable<List<News>> =
-            localSource.getNews().mergeWith(networkSource.getNews()
-                    .map {
-                        localSource.saveNews(it)
-                    }.flatMap {
-                        localSource.getNews()
-                    }.onErrorResumeNext {
-                        Observable.error((it as FuelError).exception)
-                    })
+            localSource.getNews().flatMap {
+                networkSource.getNews()
+            }.map {
+                localSource.saveNews(it)
+            }.flatMap {
+                localSource.getNews()
+            }.onErrorResumeNext {
+                Observable.error((it as FuelError).exception)
+            }
 }
