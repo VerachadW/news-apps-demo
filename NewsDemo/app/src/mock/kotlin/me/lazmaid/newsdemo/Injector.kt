@@ -1,6 +1,6 @@
-package me.lazmaid.newsdemo.data
+package me.lazmaid.newsdemo
 
-import me.lazmaid.news.demo.data.source.FakeNewsDataSource
+import me.lazmaid.newsdemo.data.source.FakeNewsDataSource
 
 /**
  * Created by VerachadW on 2/26/2017 AD.
